@@ -1,8 +1,17 @@
+// Imports
 import express from 'express';
 import dotenv from 'dotenv';
+import colors from 'colors';
+// Security Imports
+// Middleware Imports
+// Database Import
+import connectDB from './config/db.js';
 
 // Load ENV vars
 dotenv.config({ path: './config/config.env' });
+
+// Connect to Database
+connectDB();
 
 const app = express();
 
