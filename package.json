@@ -1,0 +1,15 @@
+{
+  "name": "api-master",
+  "version": "1.0.0",
+  "description": "Highly reusable Node API for web applications",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "Aaron McMullan",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
