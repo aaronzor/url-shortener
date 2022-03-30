@@ -16,6 +16,7 @@ connectDB();
 
 // Route Files
 import { authRoutes } from './routes/auth.js';
+import { userRoutes } from './routes/users.js';
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(cookieParser());
 
 // Mount route files
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/users', userRoutes);
 
 const PORT = process.env.PORT || 5000;
 
