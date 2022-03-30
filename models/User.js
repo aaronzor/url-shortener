@@ -39,7 +39,7 @@ const UserSchema = new mongoose.Schema({
 });
 
 // Encrypt password using bcrypt, salts hash for added strength
-UserSchema.pre('save', async (next) => {
+UserSchema.pre('save', async function (next) {
     if (!this.isModified('password')) {
         next();
     }
@@ -49,19 +49,19 @@ UserSchema.pre('save', async (next) => {
 });
 
 // Sign JWT and return
-UserSchema.methods.getSignedJwtToken = () => {
+UserSchema.methods.getSignedJwtToken = function () {
     return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRE
     });
 };
 
 // Match user entered password to hashed password in database
-UserSchema.methods.matchPassword = async (enteredPassword) => {
+UserSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 };
 
 // Generate and hash password token
-UserSchema.methods.getResetPasswordToken = () => {
+UserSchema.methods.getResetPasswordToken = function () {
     // Generate token
     const resetToken = crypto.randomBytes(20).toString('hex');
 
