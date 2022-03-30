@@ -9,13 +9,13 @@ import {
     resetPassword,
     updateDetails,
     updatePassword
-} from '../controllers/auth';
+} from '../controllers/auth.js';
 
 // Define router
 const router = express.Router();
 
 // Import Middleware
-import { protect } from '../middleware/auth';
+import { protect } from '../middleware/auth.js';
 
 router.post('/register', register);
 router.post('/login', login);

@@ -5,7 +5,7 @@ for checking to see if a user has the role 'admin' before being able to preform 
 
 // Imports
 import User from '../models/User.js';
-import ErrorResponse from '../utils/errorResponse';
+import ErrorResponse from '../utils/errorResponse.js';
 import asyncHandler from './async.js';
 import jwt from 'jsonwebtoken';
 

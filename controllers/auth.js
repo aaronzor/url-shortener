@@ -3,8 +3,8 @@ such as registering user accounts, logging in, updating user details and resetti
 
 // Imports
 import User from '../models/User.js';
-import ErrorResponse from '../utils/errorResponse';
-import asyncHandler from '../middleware/async';
+import ErrorResponse from '../utils/errorResponse.js';
+import asyncHandler from '../middleware/async.js';
 import crypto from 'crypto';
 
 // @desc      Register user
@@ -147,7 +147,7 @@ export const resetPassword = asyncHandler(async (req, res, next) => {
 });
 
 // Get token from model, create cookie and send response
-const sendTokenResponse = (user, statusCode, res) => {
+export const sendTokenResponse = (user, statusCode, res) => {
     // Create token
     const token = user.getSignedJwtToken();
 
