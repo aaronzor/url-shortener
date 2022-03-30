@@ -8,7 +8,8 @@ import {
     getMe,
     resetPassword,
     updateDetails,
-    updatePassword
+    updatePassword,
+    forgotPassword
 } from '../controllers/auth.js';
 
 // Define router
@@ -24,5 +25,6 @@ router.get('/me', protect, getMe);
 router.put('/updatedetails', protect, updateDetails);
 router.put('/updatepassword', protect, updatePassword);
 router.put('/resetpassword/:resettoken', resetPassword);
+router.post('/forgotpassword', forgotPassword);
 
 export { router as authRoutes };
