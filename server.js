@@ -14,6 +14,9 @@ dotenv.config({ path: './config/config.env' });
 // Connect to Database
 connectDB();
 
+// Route Files
+import { authRoutes } from './routes/auth.js';
+
 const app = express();
 
 // Body Parser
@@ -21,6 +24,9 @@ app.use(express.json());
 
 // Cookie Parser
 app.use(cookieParser());
+
+// Mount route files
+app.use('/api/v1/auth', authRoutes);
 
 const PORT = process.env.PORT || 5000;
 
