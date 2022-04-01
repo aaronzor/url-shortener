@@ -15,12 +15,13 @@ import {
 const router = express.Router({ mergeParams: true });
 
 // Import Middleware
+import advancedResults from '../middleware/advancedResults.js';
 import { protect, authorize } from '../middleware/auth.js';
 
 router.use(protect);
 router.use(authorize('admin'));
 
-router.route('/').get(getUsers).post(createUser);
+router.route('/').get(advancedResults(User), getUsers).post(createUser);
 
 router.route('/:id').get(getUser).put(updateUser).delete(deleteUser);
 
