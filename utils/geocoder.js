@@ -1,5 +1,10 @@
 import NodeGeocoder from 'node-geocoder';
+import dotenv from 'dotenv';
 
+// Load env vars
+dotenv.config({ path: './config/config.env' });
+
+// Set options
 const options = {
     provider: process.env.GEOCODER_PROVIDER,
     httpAdapter: 'https',
@@ -7,6 +12,7 @@ const options = {
     formatter: null
 };
 
+// Define Geocoder
 const geocoder = NodeGeocoder(options);
 
 export default geocoder;
