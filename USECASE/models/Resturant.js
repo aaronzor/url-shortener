@@ -19,6 +19,10 @@ const ResturantSchema = new mongoose.Schema(
                 'Cuisine length cannot be longer than 25 characters'
             ]
         },
+        about: {
+            type: String,
+            maxlength: [1000, 'About information is limited to 1000 characters']
+        },
         website: {
             type: String,
             match: [
