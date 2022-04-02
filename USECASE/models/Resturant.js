@@ -45,6 +45,11 @@ const ResturantSchema = new mongoose.Schema(
             type: String,
             default: 'no-photo.jpg'
         },
+        averageRating: {
+            type: Number,
+            min: [1, 'Rating must be at least 1'],
+            max: [10, 'Rating must can not be more than 10']
+        },
         location: {
             // Information GEOcoded from the entered address
             type: {
