@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import slugify from 'slugify';
+import geocoder from '../../utils/geocoder.js';
 
 const ResturantSchema = new mongoose.Schema(
     {
@@ -13,7 +14,6 @@ const ResturantSchema = new mongoose.Schema(
         slug: String,
         cuisine: {
             type: String,
-            required: [true, 'Please include a cuisine'],
             maxlength: [
                 25,
                 'Cuisine length cannot be longer than 25 characters'
@@ -73,8 +73,7 @@ const ResturantSchema = new mongoose.Schema(
         },
         user: {
             type: mongoose.Schema.ObjectId,
-            ref: 'User',
-            required: true
+            ref: 'User'
         },
         createdAt: {
             type: Date,
