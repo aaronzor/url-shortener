@@ -2,6 +2,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import colors from 'colors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 // Security Imports
 import mongoSanitize from 'express-mongo-sanitize';
@@ -61,6 +63,8 @@ app.use(hpp());
 app.use(cors());
 
 // Set static folder
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Mount route files

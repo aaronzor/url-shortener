@@ -7,14 +7,14 @@ import {
     deleteResturant,
     getResturantsInRadius,
     resturantPhotoUpload
-} from '../controllers/resturants.js';
+} from '../controllers/resturant.js';
 
 import Resturant from '../models/Resturant.js';
 
 const router = express.Router();
 
 import advancedResults from '../../middleware/advancedResults.js';
-import { protect, authorize } from '../middleware/auth.js';
+import { protect, authorize } from '../../middleware/auth.js';
 
 router.route('/radius/:postalCode/:distance').get(getResturantsInRadius);
 

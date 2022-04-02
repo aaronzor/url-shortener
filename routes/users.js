@@ -14,6 +14,9 @@ import {
 // Define Router
 const router = express.Router({ mergeParams: true });
 
+// Import user model
+import User from '../models/User.js';
+
 // Import Middleware
 import advancedResults from '../middleware/advancedResults.js';
 import { protect, authorize } from '../middleware/auth.js';
