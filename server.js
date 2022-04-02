@@ -57,6 +57,9 @@ app.use(hpp());
 // Enable CORS
 app.use(cors());
 
+// Set static folder
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Mount route files
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
