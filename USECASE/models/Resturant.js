@@ -40,12 +40,48 @@ const ResturantSchema = new mongoose.Schema({
     photo: {
         type: String,
         default: 'no-photo.jpg'
+    },
+    location: {
+        // Information GEOcoded from the entered address
+        type: {
+            type: String,
+            enum: ['Point']
+        },
+        coordinates: {
+            type: [Number],
+            index: '2dsphere'
+        },
+        formattedAddress: String,
+        street: String,
+        city: String,
+        county: String,
+        postalCode: String,
+        country: String
     }
 });
 
 // Create resturant slug from the name
 ResturantSchema.pre('save', function (next) {
     this.slug = slugify(this.name, { lower: true });
+    next();
+});
+
+// Geocode & create location field
+ResturantSchema.pre('save', async function (next) {
+    const loc = await geocoder.geocode(this.address);
+    this.location = {
+        type: 'Point',
+        coordinates: [loc[0].longitude, loc[0].latitude],
+        formattedAddress: loc[0].formattedAddress,
+        street: loc[0].streetName,
+        city: loc[0].city,
+        county: loc[0].stateCode,
+        postalCode: loc[0].zipcode,
+        country: loc[0].countryCode
+    };
+
+    // Do not save address in DB
+    this.address = undefined;
     next();
 });
 
