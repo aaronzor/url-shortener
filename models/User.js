@@ -20,8 +20,14 @@ const UserSchema = new mongoose.Schema({
     role: {
         /* Applications where user role grants access to different API routes
         may make use of this - eg: 'admin' roles. Advise using 'enum' to allow 
-        a selection of roles, depending on your application */
+        a selection of roles, depending on your application. 
+        
+        Some routes and functions require the logged in user to have 
+        an 'admin' role, for security reasons this must be 
+        changed manually in the database by a human.*/
+
         type: String,
+        enum: ['user', 'publisher'],
         default: 'user'
     },
     password: {
