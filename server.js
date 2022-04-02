@@ -20,7 +20,7 @@ import cookieParser from 'cookie-parser';
 import connectDB from './config/db.js';
 
 // Load ENV vars
-dotenv.config({ path: './config/config.env' });
+dotenv.config({ path: './config/.env' });
 
 // Connect to Database
 connectDB();
