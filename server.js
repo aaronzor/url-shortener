@@ -27,6 +27,9 @@ connectDB();
 import { authRoutes } from './routes/auth.js';
 import { userRoutes } from './routes/users.js';
 
+//USECASE Route Files
+import { resturantRoutes } from './USECASE/routes/resturants.js';
+
 const app = express();
 
 // Body Parser
@@ -63,6 +66,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Mount route files
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
+
+// USECASE Mount Route Files
+app.use('/api/v1/resturants', resturantRoutes);
 
 const PORT = process.env.PORT || 5000;
 
