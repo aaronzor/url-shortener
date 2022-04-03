@@ -133,6 +133,43 @@ Tech Stack,
  How to use / run 
 </h2>
 
-<p align="center">
-  
+<p>
+  The API can be launched via two commands, one for the Development enviornment and one for production. The main differenced between these two enviorments is that when the API is running in development mode, Nodemon is watching for any updates made to the codebase, while in production it is not. The two commands are as follows:
+    
+    - npm run dev 
+      - Nodemon development mode
+
+    - npm start
+      - Production Mode
+
+To make use of the API some enviornment variables have to be created, these are stored in the config folder. To create them, first create a new file within the config folder called '.env' this file will hold all of the variables used throughout the API
+
+Below is a list of each variable that must be in place for the API to function correctly:
+
+-   NODE_ENV - This is the production mode that the 'npm run dev' command will run the API in, should be set to "Development".
+-   PORT - The port that the API will run on, default setting is "5000".
+    <br>
+-   MONGO_URI - The connection URI that allows the API to communicate to a MongoDB database, this is supplied when you create your database with MongoDB.
+    This can also be changed to another NoSQL database engine if desired.
+    <br>
+-   JWT_SECRET - User defined secret key used to generate JSON web tokens, make it hard to guess!
+-   JWT_EXPIRE - Length of time in days that it takes for generated JWTs to expire, default is 30.
+-   JWT_COOKIE_EXPIRE - Same as above.
+    <br>
+-   SMTP_HOST - Hostname of smpt provider used by nodemailer to send password reset tokens to users.
+-   SMTP_PORT - Port used by SMTP provider.
+-   SMTP_EMAIL - Your login username / email for your SMTP provider.
+-   SMTP_PASSWORD - Your password for your SMTP provider.
+-   FROM_EMAIL - The email address that you would like your password reset links to be sent from.
+-   FROM_NAME - The name of your Application / Company included in emails sent to users.
+    <br>
+-   GEOCODER_PROVIDER - The name of the provider used to process geolocation services, "Mapquest" is a great provider.
+-   GEOCODER_API_KEY - Your API provided by whichever Geocoding provider you use.
+
+Once you have all of your Enviornment variables in place you can begin using the API. Simply run the API using one of the commands outlined above.
+
+For testing without an application front end there are a number of methods available. Postman can be used, or you can query the API from any terminal using cURL.
+
+After that, begin integrating the API into whichever application is being built.
+
 </p>
