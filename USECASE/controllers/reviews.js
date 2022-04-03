@@ -1,16 +1,16 @@
 import ErrorResponse from '../../utils/errorResponse.js';
 import asyncHandler from '../../middleware/async.js';
 import Review from '../models/Review.js';
-import Resturant from '../models/Resturant.js';
+import Restaurant from '../models/Restaurant.js';
 
 // @desc      Get reviews
 // @route     GET /api/v1/reviews
-// @route     GET /api/v1/resturants/:resturantId/reviews
+// @route     GET /api/v1/restaurants/:resturantId/reviews
 // @access    Public
 export const getReviews = asyncHandler(async (req, res, next) => {
     if (req.params.resturantId) {
         const reviews = await Review.find({
-            resturant: req.params.resturantId
+            restaurant: req.params.resturantId
         });
 
         return res.status(200).json({
@@ -28,7 +28,7 @@ export const getReviews = asyncHandler(async (req, res, next) => {
 // @access    Public
 export const getReview = asyncHandler(async (req, res, next) => {
     const review = await Review.findById(req.params.id).populate({
-        path: 'resturant',
+        path: 'restaurant',
         select: 'name description'
     });
 
@@ -48,18 +48,18 @@ export const getReview = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Add review
-// @route     POST /api/v1/resturants/:resturantId/reviews
+// @route     POST /api/v1/restaurants/:resturantId/reviews
 // @access    Private
 export const addReview = asyncHandler(async (req, res, next) => {
-    req.body.resturant = req.params.resturantId;
+    req.body.restaurant = req.params.resturantId;
     req.body.user = req.user.id;
 
-    const resturant = await Resturant.findById(req.params.resturantId);
+    const restaurant = await Restaurant.findById(req.params.resturantId);
 
-    if (!resturant) {
+    if (!restaurant) {
         return next(
             new ErrorResponse(
-                `No resturant with the id of ${req.params.resturantId}`,
+                `No restaurant with the id of ${req.params.resturantId}`,
                 404
             )
         );

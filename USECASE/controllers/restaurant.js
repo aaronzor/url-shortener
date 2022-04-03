@@ -1,133 +1,133 @@
 import ErrorResponse from '../../utils/errorResponse.js';
 import asyncHandler from '../../middleware/async.js';
 import geocoder from '../../utils/geocoder.js';
-import Resturant from '../models/Resturant.js';
+import Restaurant from '../models/Restaurant.js';
 import path from 'path';
 
-// @desc      Get all resturants
-// @route     GET /api/v1/resturants
+// @desc      Get all restaurants
+// @route     GET /api/v1/restaurants
 // @access    Public
 export const getResturants = asyncHandler(async (req, res, next) => {
     res.status(200).json(res.advancedResults);
 });
 
-// @desc      Get single resturant
-// @route     GET /api/v1/resturants/:id
+// @desc      Get single restaurant
+// @route     GET /api/v1/restaurants/:id
 // @access    Public
 export const getResturant = asyncHandler(async (req, res, next) => {
-    const resturant = await Resturant.findById(req.params.id);
+    const restaurant = await Restaurant.findById(req.params.id);
 
-    if (!resturant) {
+    if (!restaurant) {
         return next(
             new ErrorResponse(
-                `Resturant not found with id of ${req.params.id}`,
+                `Restaurant not found with id of ${req.params.id}`,
                 404
             )
         );
     }
 
-    res.status(200).json({ success: true, data: resturant });
+    res.status(200).json({ success: true, data: restaurant });
 });
 
-// @desc      Create new resturant
-// @route     POST /api/v1/resturants
+// @desc      Create new restaurant
+// @route     POST /api/v1/restaurants
 // @access    Private
 export const createResturant = asyncHandler(async (req, res, next) => {
     // Add user to req,body
     req.body.user = req.user.id;
 
-    // Check for published resturant
-    const publishedResturant = await Resturant.findOne({ user: req.user.id });
+    // Check for published restaurant
+    const publishedResturant = await Restaurant.findOne({ user: req.user.id });
 
-    // If the user is not an admin, they can only add one resturant
+    // If the user is not an admin, they can only add one restaurant
     if (publishedResturant && req.user.role !== 'admin') {
         return next(
             new ErrorResponse(
-                `The user with ID ${req.user.id} has already published a resturant`,
+                `The user with ID ${req.user.id} has already published a restaurant`,
                 400
             )
         );
     }
 
-    const resturant = await Resturant.create(req.body);
+    const restaurant = await Restaurant.create(req.body);
 
     res.status(201).json({
         success: true,
-        data: resturant
+        data: restaurant
     });
 });
 
-// @desc      Update resturant
-// @route     PUT /api/v1/resturants/:id
+// @desc      Update restaurant
+// @route     PUT /api/v1/restaurants/:id
 // @access    Private
 export const updateResturant = asyncHandler(async (req, res, next) => {
-    let resturant = await Resturant.findById(req.params.id);
+    let restaurant = await Restaurant.findById(req.params.id);
 
-    if (!resturant) {
+    if (!restaurant) {
         return next(
             new ErrorResponse(
-                `Resturant not found with id of ${req.params.id}`,
+                `Restaurant not found with id of ${req.params.id}`,
                 404
             )
         );
     }
 
-    // Make sure user is resturant owner
+    // Make sure user is restaurant owner
     if (
-        resturant.user.toString() !== req.user.id &&
+        restaurant.user.toString() !== req.user.id &&
         req.user.role !== 'admin'
     ) {
         return next(
             new ErrorResponse(
-                `User ${req.params.id} is not authorized to update this resturant`,
+                `User ${req.params.id} is not authorized to update this restaurant`,
                 401
             )
         );
     }
 
-    resturant = await Resturant.findOneAndUpdate(req.params.id, req.body, {
+    restaurant = await Restaurant.findOneAndUpdate(req.params.id, req.body, {
         new: true,
         runValidators: true
     });
 
-    res.status(200).json({ success: true, data: resturant });
+    res.status(200).json({ success: true, data: restaurant });
 });
 
-// @desc      Delete resturant
-// @route     DELETE /api/v1/resturants/:id
+// @desc      Delete restaurant
+// @route     DELETE /api/v1/restaurants/:id
 // @access    Private
 export const deleteResturant = asyncHandler(async (req, res, next) => {
-    const resturant = await Resturant.findById(req.params.id);
+    const restaurant = await Restaurant.findById(req.params.id);
 
-    if (!resturant) {
+    if (!restaurant) {
         return next(
             new ErrorResponse(
-                `Resturant not found with id of ${req.params.id}`,
+                `Restaurant not found with id of ${req.params.id}`,
                 404
             )
         );
     }
 
-    // Make sure user is resturant owner
+    // Make sure user is restaurant owner
     if (
-        resturant.user.toString() !== req.user.id &&
+        restaurant.user.toString() !== req.user.id &&
         req.user.role !== 'admin'
     ) {
         return next(
             new ErrorResponse(
-                `User ${req.params.id} is not authorized to delete this resturant`,
+                `User ${req.params.id} is not authorized to delete this restaurant`,
                 401
             )
         );
     }
 
-    resturant.remove();
+    restaurant.remove();
 
     res.status(200).json({ success: true, data: {} });
 });
 
-// @desc      Get resturants within a radius
-// @route     GET /api/v1/resturants/radius/:postalCode/:distance
+// @desc      Get restaurants within a radius
+// @route     GET /api/v1/restaurants/radius/:postalCode/:distance
 // @access    Private
 export const getResturantsInRadius = asyncHandler(async (req, res, next) => {
     const { postalCode, distance } = req.params;
@@ -142,40 +142,40 @@ export const getResturantsInRadius = asyncHandler(async (req, res, next) => {
     // Earth Radius = 3,963 mi / 6,378 km
     const radius = distance / 3963;
 
-    const resturants = await Resturant.find({
+    const restaurants = await Restaurant.find({
         location: { $geoWithin: { $centerSphere: [[lng, lat], radius] } }
     });
 
     res.status(200).json({
         success: true,
-        count: resturants.length,
-        data: resturants
+        count: restaurants.length,
+        data: restaurants
     });
 });
 
-// @desc      Upload photo for resturant
-// @route     PUT /api/v1/resturants/:id/photo
+// @desc      Upload photo for restaurant
+// @route     PUT /api/v1/restaurants/:id/photo
 // @access    Private
 export const resturantPhotoUpload = asyncHandler(async (req, res, next) => {
-    const resturant = await Resturant.findById(req.params.id);
+    const restaurant = await Restaurant.findById(req.params.id);
 
-    if (!resturant) {
+    if (!restaurant) {
         return next(
             new ErrorResponse(
-                `Resturant not found with id of ${req.params.id}`,
+                `Restaurant not found with id of ${req.params.id}`,
                 404
             )
         );
     }
 
-    // Make sure user is resturant owner
+    // Make sure user is restaurant owner
     if (
-        resturant.user.toString() !== req.user.id &&
+        restaurant.user.toString() !== req.user.id &&
         req.user.role !== 'admin'
     ) {
         return next(
             new ErrorResponse(
-                `User ${req.params.id} is not authorized to update this resturant`,
+                `User ${req.params.id} is not authorized to update this restaurant`,
                 401
             )
         );
@@ -203,7 +203,7 @@ export const resturantPhotoUpload = asyncHandler(async (req, res, next) => {
     }
 
     // Create custom filename
-    file.name = `photo_${resturant._id}${path.parse(file.name).ext}`;
+    file.name = `photo_${restaurant._id}${path.parse(file.name).ext}`;
 
     file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async (err) => {
         if (err) {
@@ -211,7 +211,7 @@ export const resturantPhotoUpload = asyncHandler(async (req, res, next) => {
             return next(new ErrorResponse(`Problem with file upload`, 500));
         }
 
-        await Resturant.findByIdAndUpdate(req.params.id, { photo: file.name });
+        await Restaurant.findByIdAndUpdate(req.params.id, { photo: file.name });
 
         res.status(200).json({
             success: true,

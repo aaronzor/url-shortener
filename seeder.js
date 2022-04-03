@@ -9,7 +9,7 @@ import { fileURLToPath } from 'url';
 dotenv.config({ path: './config/.env' });
 
 // Load models
-import Resturant from './USECASE/models/Resturant.js';
+import Restaurant from './USECASE/models/Restaurant.js';
 import User from './models/User.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -24,8 +24,8 @@ mongoose.connect(process.env.MONGO_URI, {
 });
 
 // Read JSON files
-const resturants = JSON.parse(
-    fs.readFileSync(`${__dirname}/_data/resturants.json`, 'utf-8')
+const restaurants = JSON.parse(
+    fs.readFileSync(`${__dirname}/_data/restaurants.json`, 'utf-8')
 );
 
 const users = JSON.parse(
@@ -35,7 +35,7 @@ const users = JSON.parse(
 // Import into DB
 const importData = async () => {
     try {
-        await Resturant.create(resturants);
+        await Restaurant.create(restaurants);
         await User.create(users);
         console.log('Data Imported...'.green.inverse);
         process.exit();
@@ -47,7 +47,7 @@ const importData = async () => {
 // Delete data
 const deleteData = async () => {
     try {
-        await Resturant.deleteMany();
+        await Restaurant.deleteMany();
         await User.deleteMany();
         console.log('Data Destroyed...'.red.inverse);
         process.exit();

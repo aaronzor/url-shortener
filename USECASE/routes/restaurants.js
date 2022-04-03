@@ -7,10 +7,10 @@ import {
     deleteResturant,
     getResturantsInRadius,
     resturantPhotoUpload
-} from '../controllers/resturant.js';
+} from '../controllers/restaurant.js';
 
 // Import model
-import Resturant from '../models/Resturant.js';
+import Restaurant from '../models/Restaurant.js';
 
 // Import review router as resource
 import { reviewRoutes } from './reviews.js';
@@ -21,7 +21,7 @@ const router = express.Router();
 import advancedResults from '../../middleware/advancedResults.js';
 import { protect, authorize } from '../../middleware/auth.js';
 
-// Re-route into other router for reviews integration by resturant
+// Re-route into other router for reviews integration by restaurant
 router.use('/:resturantId/reviews', reviewRoutes);
 
 router.route('/radius/:postalCode/:distance').get(getResturantsInRadius);
@@ -32,7 +32,7 @@ router
 
 router
     .route('/')
-    .get(advancedResults(Resturant, 'courses'), getResturants)
+    .get(advancedResults(Restaurant, 'courses'), getResturants)
     .post(protect, authorize('publisher', 'admin'), createResturant);
 
 router

@@ -30,7 +30,7 @@ import { authRoutes } from './routes/auth.js';
 import { userRoutes } from './routes/users.js';
 
 //USECASE Route Files
-import { resturantRoutes } from './USECASE/routes/resturants.js';
+import { resturantRoutes } from './USECASE/routes/restaurants.js';
 import { reviewRoutes } from './USECASE/routes/reviews.js';
 
 const app = express();
@@ -73,7 +73,7 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
 
 // USECASE Mount Route Files
-app.use('/api/v1/resturants', resturantRoutes);
+app.use('/api/v1/restaurants', resturantRoutes);
 app.use('/api/v1/reviews', reviewRoutes);
 
 const PORT = process.env.PORT || 5000;

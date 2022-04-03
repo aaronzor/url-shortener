@@ -86,7 +86,7 @@ const ResturantSchema = new mongoose.Schema(
     }
 );
 
-// Create resturant slug from the name
+// Create restaurant slug from the name
 ResturantSchema.pre('save', function (next) {
     this.slug = slugify(this.name, { lower: true });
     next();
@@ -111,4 +111,4 @@ ResturantSchema.pre('save', async function (next) {
     next();
 });
 
-export default mongoose.model('Resturant', ResturantSchema);
+export default mongoose.model('Restaurant', ResturantSchema);
