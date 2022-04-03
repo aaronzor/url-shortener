@@ -27,34 +27,35 @@ work with MongoDB, but could easily be converted to make use of any other NoSQL 
 </h2>
 <br>
 
-    -Users
-        - Because most of my applications include user registration / authentication I have made this baseline in the API
-        - Create, Read, Update and Delete (CRUD) routes for users in the database
-        - User roles, for example; 'admin' or 'user'
-        - User authentication is achieved using Json Web Tokens (JWT) / Cookies
-        - When a user registers they are automatically logged in
-        - User passwords are hashed before being stored in the database - no plain text passwords are stored
-        - Users log in with email & password
-            - Entered plain text password is hashed and checked against hashed password stored in database
-            - On sucessful login, a JWT will be sent along with the cookie to provide authentication to the server
-            - On logout the JWT cookie is destroyed
-        - Route to query the current logged in user for the session
-        - Password reset
-            - User can request to reset password
-            - A hashed token will be emailed to the users registered email address
-            - A put request can be made to the generated url to reset password
-            - The token will expire after 10 minutes
-        - Authenticated user may update their stored information - name, email etc
-        - User CRUD is Admin only
-        - Users must be set to Admin role manually in the database by a human
+<p style="text-decoration: underline; font-size: 16px">Users</p>
 
-    - Other Baseline features
-        - Pagination - this is part of the advancedResults middleware built into the API and can easily applied to any database query
-        - Limit number of results per page
-        - Filter by fields
-        - Select specific fields in result
-        - Built in geocoding - useful if your application needs to make use of maps / addresses / location data
-        - Sophisticated middleware to allow for less repitition within the code, error handling, async function handling etc
+-   Because most of my applications include user registration / authentication I have made this baseline in the API
+-   Create, Read, Update and Delete (CRUD) routes for users in the database
+-   User roles, for example; 'admin' or 'user'
+-   User authentication is achieved using Json Web Tokens (JWT) / Cookies
+-   When a user registers they are automatically logged in
+-   User passwords are hashed before being stored in the database - no plain text passwords are stored
+-   Users log in with email & password
+    -   Entered plain text password is hashed and checked against hashed password stored in database
+    -   On sucessful login, a JWT will be sent along with the cookie to provide authentication to the server
+    -   On logout the JWT cookie is destroyed
+    -   Route to query the current logged in user for the session
+-   Password reset
+    -   User can request to reset password
+    -   A hashed token will be emailed to the users registered email address
+    -   A put request can be made to the generated url to reset password
+    -   The token will expire after 10 minutes
+-   Authenticated user may update their stored information - name, email etc
+-   User CRUD is Admin only
+-   Users must be set to Admin role manually in the database by a human
+
+    -   Other Baseline features
+        -   Pagination - this is part of the advancedResults middleware built into the API and can easily applied to any database query
+        -   Limit number of results per page
+        -   Filter by fields
+        -   Select specific fields in result
+        -   Built in geocoding - useful if your application needs to make use of maps / addresses / location data
+        -   Sophisticated middleware to allow for less repitition within the code, error handling, async function handling etc
 
 <hr>
 <h2 align="center">
@@ -62,20 +63,25 @@ work with MongoDB, but could easily be converted to make use of any other NoSQL 
 </h2>
 <br>
 
-    - Security
-        - NoSQL injection prevented with mongo-sanitize
-        - Security headers
-        - Built in cross site scripting prevention
-        - Rate limiting
-        - Http paramter pollution prevention
-        - Password and reset token encryption
-        - CORS rules can be easily changed if the API is not desired to be public
+<p style="text-decoration: underline; font-size: 16px">Security</p>
 
-    - Data seeder for development and testing
-        - Sample data is included in JSON files (_data folder)
-        - Two commands:
-        - 'node seeder -i' will populate the database with data in these JSON files
-        - 'node seeder -d' will destroy all baseline data in the database (will not destroy custom schemas / documents)
+-   NoSQL injection prevented with mongo-sanitize
+-   Security headers
+-   Built in cross site scripting prevention
+-   Rate limiting
+-   Http paramter pollution prevention
+-   Password and reset token encryption
+-   CORS rules can be easily changed if the API is not desired to be public
+
+Data seeder for development and testing:
+
+Sample data is included in JSON files (\_data folder) allowing easier testing of the API.
+<br>
+
+Two commands:
+
+    -   'node seeder -i' will populate the database with data in these JSON files
+    -   'node seeder -d' will destroy all baseline data in the database (will not destroy custom schemas / documents)
 
 <hr>
 <h2 align="center">
@@ -83,21 +89,23 @@ work with MongoDB, but could easily be converted to make use of any other NoSQL 
 </h2>
 <br>
 
-    - Included is a use case to demonstrate how the API could be used to provide a backend for a web application
-    - Use case is a restaurant guide / reviews platform
-        - Allows users with 'publisher' or 'admin' role to create restaurants and store them in the database
-        - Allows users to create and leave reviews of stored restaurants - 'publishers' cannot create reviews
-        - Geocoding creates detailed location information for restaurant using the address provided when creating restaurant listing
-        - Database relationships between reviews - restaurants and reviews - users provides ownership of database entries
-        - Restaurant average rating is automatically calculated based on reviews
-        - Querying restaurants and reviews includes all advancedResults middleware, eg: Pagination, filtering, limiting results etc
-        - Publisher can upload a photograph for restaurant profile, default storage in local files, but can easily be changed
-        - Search for restaurants by postal code - uses geocoder to return all restaurants in a radius around a postal code
+Included is a use case to demonstrate how the API could be used to provide a backend for a web application
 
-    This use case shows the versatility and depth of the API, any application can easily be integrated in the same way that this use case was,
-    allowing for quick implementation of a feature rich backend for web applications
+-   Use case is a restaurant guide / reviews platform
 
-    All code specific to the use case is stored in the 'USECASE' folder or is clearly labeleld USECASE throughout the codebase, making it easily removed.
+    -   Allows users with 'publisher' or 'admin' role to create restaurants and store them in the database
+    -   Allows users to create and leave reviews of stored restaurants - 'publishers' cannot create reviews
+    -   Geocoding creates detailed location information for restaurant using the address provided when creating restaurant listing
+    -   Database relationships between reviews - restaurants and reviews - users provides ownership of database entries
+    -   Restaurant average rating is automatically calculated based on reviews
+    -   Querying restaurants and reviews includes all advancedResults middleware, eg: Pagination, filtering, limiting results etc
+    -   Publisher can upload a photograph for restaurant profile, default storage in local files, but can easily be changed
+    -   Search for restaurants by postal code - uses geocoder to return all restaurants in a radius around a postal code
+
+This use case shows the versatility and depth of the API, any application can easily be integrated in the same way that this use case was,
+allowing for quick implementation of a feature rich backend for web applications
+
+All code specific to the use case is stored in the 'USECASE' folder or is clearly labeleld USECASE throughout the codebase, making it easily removed.
 
 <hr>
 <h2 align="center">
@@ -105,7 +113,7 @@ work with MongoDB, but could easily be converted to make use of any other NoSQL 
 </h2>
 <br>
 
-Tech Stack,
+Tech Stack
 
 -   Database: MongoDB Atlas
 -   Server: Express.js & Node.js
