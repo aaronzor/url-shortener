@@ -23,7 +23,7 @@ const ReviewSchema = new mongoose.Schema({
     },
     restaurant: {
         type: mongoose.Schema.ObjectId,
-        ref: 'Bootcamp',
+        ref: 'Resturant',
         required: true
     },
     user: {
