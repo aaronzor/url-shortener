@@ -28,6 +28,8 @@ connectDB();
 // Route Files
 import { authRoutes } from './routes/auth.js';
 import { userRoutes } from './routes/users.js';
+import { urlRoutes } from './routes/url.js';
+import { redirectRoute } from './routes/redirect.js';
 
 const app = express();
 
@@ -67,6 +69,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Mount route files
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
+app.use('/', redirectRoute);
+app.use('/api/v1/url', urlRoutes);
 
 const PORT = process.env.PORT || 5000;
 
