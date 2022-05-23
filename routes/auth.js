@@ -2,14 +2,14 @@ import express from 'express';
 
 // Import Controllers
 import {
-    register,
-    login,
-    logout,
-    getMe,
-    resetPassword,
-    updateDetails,
-    updatePassword,
-    forgotPassword
+  register,
+  login,
+  logout,
+  getMe,
+  resetPassword,
+  updateDetails,
+  updatePassword,
+  forgotPassword,
 } from '../controllers/auth.js';
 
 // Define router

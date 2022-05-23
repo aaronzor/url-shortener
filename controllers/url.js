@@ -31,14 +31,12 @@ export const newUrl = asyncHandler(async (req, res, next) => {
 export const newUserUrl = asyncHandler(async (req, res, next) => {
   const { origUrl } = req.body;
   const base = process.env.BASE_URL;
-  console.log(req.headers);
-  console.log(req.user);
+  req.body.user = req.user.id;
 
   const urlId = nanoid(10);
 
   const shortUrl = `${base}/${urlId}`;
 
-  req.body.user = req.user.id;
   const newUrl = await Url.create({
     urlId,
     origUrl,
