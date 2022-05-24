@@ -21,6 +21,7 @@ const UrlSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
+    required: false,
   },
   date: {
     type: Date,
