@@ -11,6 +11,7 @@ import {
   updatePassword,
   forgotPassword,
   activateUser,
+  resendActivation,
 } from '../controllers/auth.js';
 
 // Define router
@@ -23,6 +24,7 @@ router.post('/register', register);
 router.post('/login', login);
 router.get('/logout', logout);
 router.get('/me', protect, getMe);
+router.get('/sendactive', protect, resendActivation);
 router.put('/updatedetails', protect, updateDetails);
 router.put('/updatepassword', protect, updatePassword);
 router.put('/resetpassword/:resettoken', resetPassword);

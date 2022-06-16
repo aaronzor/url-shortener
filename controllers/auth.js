@@ -83,6 +83,51 @@ export const activateUser = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: 'Account Activated' });
 });
 
+// @desc      Resend Activation Link
+// @desc      GET /api/v1/auth/sendactive
+// @access    Private
+export const resendActivation = asyncHandler(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
+
+  if (!user) {
+    return next(new ErrorResponse('There is no user with that email', 404));
+  }
+
+  // Generate new token
+  const activateToken = user.getResetPasswordToken();
+
+  await user.save({ validateBeforeSave: false });
+
+  // Create reset url
+  const activateUrl = `${req.protocol}://${req.get(
+    'host'
+  )}/api/v1/auth/activate/${activateToken}`;
+
+  // DEV NOTE - The message below is placeholder, change to utilize whatever frontend is being used
+
+  const message = `Thank you for registering with <company>, Please use the following link to activate your account: \n\n ${activateUrl}`;
+
+  try {
+    await emailSender({
+      email: user.email,
+      subject: 'Account Activation',
+      message,
+    });
+
+    res
+      .status(200)
+      .json({ success: true, data: 'Activation email sent', user });
+  } catch (err) {
+    console.log(err);
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save({ validateBeforeSave: false });
+
+    return next(new ErrorResponse('Email could not be sent', 500));
+  }
+});
+
 // @desc      Login user
 // @route     POST /api/v1/auth/login
 // @access    Public
