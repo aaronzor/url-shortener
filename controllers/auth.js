@@ -57,7 +57,7 @@ export const register = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @desc       Acvtivate Account
+// @desc       Activate Account
 // @route      PUT /api/v1/auth/activate/:activatetoken
 // @access     Public
 export const activateUser = asyncHandler(async (req, res, next) => {
