@@ -10,6 +10,7 @@ import {
   updateDetails,
   updatePassword,
   forgotPassword,
+  activateUser,
 } from '../controllers/auth.js';
 
 // Define router
@@ -25,6 +26,7 @@ router.get('/me', protect, getMe);
 router.put('/updatedetails', protect, updateDetails);
 router.put('/updatepassword', protect, updatePassword);
 router.put('/resetpassword/:resettoken', resetPassword);
+router.put('/activate/:activatetoken', activateUser);
 router.post('/forgotpassword', forgotPassword);
 
 export { router as authRoutes };

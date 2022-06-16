@@ -57,6 +57,32 @@ export const register = asyncHandler(async (req, res, next) => {
   }
 });
 
+// @desc       Acvtivate Account
+// @route      PUT /api/v1/auth/activate/:activatetoken
+// @access     Public
+export const activateUser = asyncHandler(async (req, res, next) => {
+  const resetPasswordToken = crypto
+    .createHash('sha256')
+    .update(req.params.activatetoken)
+    .digest('hex');
+
+  const user = await User.findOne({
+    resetPasswordToken,
+  });
+
+  if (!user) {
+    return next(new ErrorResponse('Invalid token', 400));
+  }
+
+  // Activate user
+  user.auth = true;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+  await user.save();
+
+  res.status(200).json({ success: true, data: 'Account Activated' });
+});
+
 // @desc      Login user
 // @route     POST /api/v1/auth/login
 // @access    Public
